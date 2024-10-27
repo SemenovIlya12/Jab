@@ -1,10 +1,12 @@
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
 
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Arrays;
+import java.util.List;
 
 
 public class Main {
@@ -97,8 +99,11 @@ public class Main {
 
         System.setProperty("file.encoding", "UTF-8");  // почему то у меня ничего подобного не работает, поэтому я и пишу на английском, у меня на пк чет не дружеестввенно как то ????????ххх**%%4#
 
+        //ArrayList<String> dA = new ArrayList<String>();
+
         Main m = new Main();
         Scanner sc = new Scanner(System.in);
+
 
         System.out.println(Text.INTRO);
 
@@ -229,7 +234,7 @@ public class Main {
                 case 14: {
                     System.out.println(Text.TASK_14_INPUT);
                     int num = sc.nextInt();
-                    m.square(num);
+                    m.square(Math.abs(num));
                 } break;
                 case 15: {
                     System.out.println(Text.TASK_15_INPUT);
@@ -302,7 +307,7 @@ public class Main {
                     int[] result = m.add(arr, arr2, x);
                     StringBuilder sb = new StringBuilder();
                     for (int i = 0; i < result.length; i++) {
-                        sb.append(result[i]);
+                        sb.append(result[i]+" ");
                     }
                     System.out.println(sb.toString());
                 } break;
@@ -323,7 +328,7 @@ public class Main {
                     int[] result = m.reverseBack(arr);
                     StringBuilder sb = new StringBuilder();
                     for (int i = 0; i < result.length; i++) {
-                        sb.append(result[i]);
+                        sb.append(result[i]+" ");
                     }
                     System.out.println(sb.toString());
                 } break;
@@ -355,6 +360,7 @@ public class Main {
             System.out.println(Text.BAD_INPUT + e.toString());
                 m.main(args);
         }
+
     }
 
     public double fraction(double x) {
@@ -384,7 +390,7 @@ public class Main {
     }
 
     public int abs (int x) {
-        return Math.abs(x);
+        return x >= 0 ? x : -x;
     }
 
     public boolean is35 (int x) {
@@ -392,7 +398,9 @@ public class Main {
     }
 
     public int max3 (int x, int y, int z) {
-        return Math.max(Math.max(x, y), z);
+        //return Math.max(Math.max(x, y), z);
+        int n = (x >= y ? x : y);
+        return n >= z ? n : z;
 
     }
 
@@ -407,7 +415,7 @@ public class Main {
 
     public String day (int x) {
         if (!isInRange(1,7, x)) {
-            System.out.println("Not an day of a week");
+            System.out.println("Not a day of a week");
             throw new IllegalArgumentException();
         }
         String[] days = {"START", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
@@ -415,23 +423,33 @@ public class Main {
     }
 
     public String listNums (int x) {
-        String result = "0";
-
-        for (int i = 1; i <= x; i++) {
-            result += " " + i;
+//        String result = "0";
+//
+//        for (int i = 1; i <= x; i++) {
+//            result += " " + i;
+//        }
+//
+//        return result;
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; i != x + (x > 0 ? 1 : -1); i += (x > 0 ? 1 : -1)) {
+            b.append(" " + i);
         }
-
-        return result;
+        return b.toString();
     }
 
     public String chet (int x) {
-        String result = "0";
-
-        for (int i = 2; i <= x; i+=2) {
-            result += " " + i;
+//        String result = "0";
+//
+//        for (int i = 2; i <= x; i+=2) {
+//            result += " " + i;
+//        }
+//
+//        return result;
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; Math.abs(i) <= Math.abs(x); i += x >= 0 ? 2 : -2) {
+            b.append(" " + i);
         }
-
-        return result;
+        return b.toString();
     }
 
     public int numLen (long x) {
@@ -527,23 +545,20 @@ public class Main {
     }
 
     public int[] findAll (int[] arr, int x) {
-        int count = 0;
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] == x) {
-                count++;
-            }
-        }
-
-        int[] indexesArray = new int[count];
-        int index = 0;
+        List<Integer> IArr = new ArrayList<Integer>();
 
 
         for (int i = 0; i < arr.length; i++) {
             if (arr[i] == x) {
-                indexesArray[index++] = i;
+                IArr.add(i);
             }
         }
 
-        return indexesArray;
+        int[] arr2 = new int[IArr.size()];
+        for (int i = 0; i < IArr.size(); i++) {
+            arr2[i] = IArr.get(i);
+        }
+
+        return arr2;
     }
 }
