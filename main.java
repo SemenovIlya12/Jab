@@ -20,7 +20,7 @@ public class Main {
 
         TASK_1(""),
         TASK_1_INPUT("Write some float value: "),                          // Enumerator Для всех текстовых сообщений "дружественного" interface
-
+                                                                            // Enum - набор констант, каждая константа содержит текст, который передается в конструктор.
         TASK_2(""),
         TASK_2_INPUT("Write symbol ( 0 1 2 3 4 5 6 7 8 9): "),
 
@@ -87,13 +87,13 @@ public class Main {
 
         Text(String text) {
             this.text = text;
-        }  // конструктор, берем стринг смотрим енум присваиваем поле
+        }  // конструктор, инициализирует поле text для каждой константы, когда она создается.
 
         @Override
         public String toString() {
             return text;
         }                                       // перезаписуем метод, для удобства пользования вооот, просто отдаем поле text
-    }
+    }                                          // при System.out.println(Text.BAD_INPUT) - к экземпляру Text применяется toString(), таким образом мы получаем текстовое сообщение из элемента перечисления.
 
     public static void main(String[] args) {
 
