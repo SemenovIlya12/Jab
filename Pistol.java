@@ -1,19 +1,35 @@
+
+
+/**
+ * Модель пистолета с ограниченным боезапасом.
+ */
 public class Pistol {
-    private int Rounds;
+    private int rounds;
+    private static final int DEFAULT_NUM_ROUNDS = 5;
 
-    public Pistol(int rnds) {
-        this.Rounds = rnds;
+    /**
+     * Создает пистолет с заданым кол-вом патронов
+     * @param rounds кол-во патронов
+     */
+    public Pistol(int rounds) {
+        this.rounds = rounds;
     }
 
+    /**
+     * Создает пистолет с стандартным кол-вом патронов
+     */
     public Pistol() {
-        this.Rounds = 5;
+        this.rounds = DEFAULT_NUM_ROUNDS;
     }
 
-    public void Shoot() {
-        if (this.Rounds > 0) {
+    /**
+     * Производит выстрел
+     */
+    public void shoot() {
+        if (this.rounds > 0) {
             System.out.println("Bah!");
-            this.Rounds --;
-        } else System.out.println("Click! Unlucky bro");
+            this.rounds--;
+        } else System.out.println("Click");
     }
 
 }

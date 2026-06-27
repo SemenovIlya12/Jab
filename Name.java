@@ -1,26 +1,57 @@
+
+
+/**
+ * Представление полного имени (имя, фамилия, отчество).
+ */
 public class Name {
-    private String Name;
-    private String Surname;
-    private String Otche;
+    private final String name;
+    private final String surname;
+    private final String otchestvo;
 
-    public Name(String name, String surname, String otche) {
-        this.Name = name;
-        this.Surname = surname;
-        this.Otche = otche;
+    /**
+     * Полное имя со всеми частями.
+     *
+     * @param name  имя
+     * @param surname   фамилия
+     * @param otchestvo отчество
+     */
+    public Name(String name, String surname, String otchestvo) {
+        this.name = name;
+        this.surname = surname;
+        this.otchestvo = otchestvo;
     }
 
-    public Name(String Name, String Surname) {
-        this(Name, Surname, null);
+    /**
+     * Имя и фамилия без отчества.
+     *
+     * @param name имя
+     * @param surname  фамилия
+     */
+    public Name(String name, String surname) {
+        this(name, surname, null);
     }
 
+    /**
+     * Только имя.
+     *
+     * @param name имя
+     */
     public Name(String name) {
         this(name, null, null);
     }
 
-
+    /**
+     * Формирует полное имя с пробелами.
+     *
+     * @return строка вида "Имя Фамилия Отчество"
+     */
     @Override
     public String toString() {
-        return (this.Name != null ? this.Name + " " : "") + (this.Surname != null ? this.Surname + " " : "") + (this.Otche != null ? this.Otche + " " : "");
+        return (this.name != null ? this.name + " " : "")
+                + (this.surname != null ?
+                    this.surname + " " : "")
+                + (this.otchestvo != null ?
+                    this.otchestvo + " " : "");
     }
 
 }

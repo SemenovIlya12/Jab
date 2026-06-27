@@ -1,23 +1,46 @@
-public class Time {
-    private int ss = 0;
-    private int mm = 0;
-    private int hh = 0;
 
+
+/**
+ * Представление времени в формате ЧЧ.ММ.СС.
+ */
+public class Time {
+    private final int hours;
+    private final int minutes;
+    private final int seconds;
+
+    private static final int SECONDS_PER_DAY = 86_400;
+    private static final int SECONDS_PER_HOUR = 3_600;
+    private static final int SECONDS_PER_MINUTE = 60;
+
+    /**
+     * Создаёт объект времени из общего количества секунд.
+     * Значение автоматически приводится к диапазону 0–86399.
+     *
+     * @param seconds секунды с начала отсчёта
+     */
     public Time(int seconds) {
-        while (seconds >= 86400) {
-            seconds -= 86400;
+        int remainingSeconds = seconds % SECONDS_PER_DAY;
+
+        if (remainingSeconds < 0) {
+            remainingSeconds += SECONDS_PER_DAY;
         }
 
-        this.hh = seconds / 3600;
-        seconds -= this.hh * 3600;
-        this.mm = seconds/60;
-        seconds -= this.mm*60;
-        this.ss = seconds;
+        this.hours = remainingSeconds / SECONDS_PER_HOUR;
+        int remainder = remainingSeconds % SECONDS_PER_HOUR;
+        this.minutes = remainder / SECONDS_PER_MINUTE;
+        this.seconds = remainder % SECONDS_PER_MINUTE;
     }
 
 
+    /**
+     * Форматирует время как ЧЧ.ММ.СС с ведущими нулями.
+     *
+     * @return отформатированная строка
+     */
     @Override
     public String toString() {
-        return (this.hh < 9 ? "0" + this.hh : this.hh) + "." + (this.mm < 9 ? "0" + this.mm : this.mm) + "." + (this.ss < 9 ? "0" + this.ss : this.ss);
+        return String.format("%02d.%02d.%02d",
+                this.hours, this.minutes, this.seconds
+        );
     }
 }
