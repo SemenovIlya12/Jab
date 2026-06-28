@@ -1,33 +1,79 @@
 package ru.Semenov.Persons;
 
+
+/**
+ * Представление полного имени (имя, фамилия, отчество).
+ */
 public class Name {
-    private final String Name;
-    private String Surname;
-    private String Otche;
+    private final String name;
+    private final String surname;
+    private final String otchestvo;
 
-    public Name(String name, String surname, String otche) {
-        if ((name != null && !name.trim().isEmpty()) || ( surname != null && !surname.trim().isEmpty()) || ( otche != null && !otche.trim().isEmpty() )) {
-            this.Name = name;
-            this.Surname = surname;
-            this.Otche = otche;
-        } else {
-            //this.Name = "Undefined";
-            throw new IllegalArgumentException("Cant invoke name without having a name, surname or OTCHESTVO!!");
+    /**
+     * Создаёт полное имя.
+     *
+     * @param name       имя
+     * @param surname    фамилия
+     * @param otchestvo отчество
+     * @throws IllegalArgumentException если все части null
+     * или пусты
+     */
+    public Name(String name,
+                String surname,
+                String otchestvo) {
+        if (isNullOrEmpty(name)
+                && isNullOrEmpty(surname)
+                && isNullOrEmpty(otchestvo)) {
+            throw new IllegalArgumentException(
+                    "Хотя бы одна часть имени " +
+                            "должна быть задана.");
         }
+
+        this.name = name;
+        this.surname = surname;
+        this.otchestvo = otchestvo;
     }
 
-    public Name(String Name, String Surname) {
-        this(Name, Surname, null);
+    /**
+     * Создаёт имя с фамилией (без отчества).
+     *
+     * @param name    имя
+     * @param surname фамилия
+     */
+    public Name(String name, String surname) {
+        this(name, surname, null);
     }
 
+    /**
+     * Создаёт только имя.
+     *
+     * @param name имя
+     */
     public Name(String name) {
         this(name, null, null);
     }
 
-
+    /**
+     * Формирует строку с частями имени.
+     *
+     * @return строка вида "Имя Фамилия Отчество"
+     */
     @Override
     public String toString() {
-        return (this.Name != null ? this.Name + " " : "") + (this.Surname != null ? this.Surname + " " : "") + (this.Otche != null ? this.Otche + " " : "");
+        return (this.name != null ? this.name + " " : "")
+                + (this.surname != null ?
+                    this.surname + " " : "")
+                + (this.otchestvo != null ?
+                    this.otchestvo + " " : "");
+    }
+
+    /**
+     * Вспомогательная функция для проверки на пустоту строки
+     * @param s строка
+     * @return True (строка пуста) / False (строка не пуста)
+     */
+    private boolean isNullOrEmpty(final String s) {
+        return s == null || s.trim().isEmpty();
     }
 
 }

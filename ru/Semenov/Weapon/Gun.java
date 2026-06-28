@@ -1,43 +1,67 @@
 package ru.Semenov.Weapon;
 
+
+/**
+ * Автоматическое оружие (пулемёт)
+ * с фиксированной скорострельностью.
+ */
 public class Gun extends Pistol{
+    private static final int DEFAULT_MAX = 30;
 
-    private final int Speed;
+    private final int speed;
 
+    /**
+     * Создаёт пулемёт с максимальной ёмкостью
+     * 30 и скорострельностью 30.
+     */
     public Gun() {
-        super(30);
-        this.Speed = 30;
+        super(DEFAULT_MAX);
+        this.Speed = DEFAULT_MAX;
     }
 
+    /**
+     * Создаёт пулемёт с заданной максимальной ёмкостью
+     * и скорострельностью max/2.
+     *
+     * @param max максимальная ёмкость
+     */
     public Gun(int max) {
         super(max);
-        this.Speed = max/2;
+        this.speed = max/2;
     }
 
-    public Gun(int max, int Speed) {
+    /**
+     * Создаёт пулемёт с заданной максимальной
+     * ёмкостью и скорострельностью.
+     * @param max   максимальная ёмкость
+     * @param speed скорострельность
+     */
+    public Gun(int max, int speed) {
         super(max);
-        this.Speed = Speed;
+        this.speed = speed;
     }
 
-
-    @Override
-    public void Shoot() {
-        for (int i = 1; i <= this.Speed; i++) {
+    /**
+     * Одна очередь выстрелов.
+     */
+    public void shoot() {
+        for (int i = 1; i <= this.speed; i++) {
             if (this.Rounds > 0) {
                 System.out.println("Bah!");
                 this.Rounds --;
-            } else System.out.println("Click! Unlucky bro");
+            } else System.out.println("Click!");
 
         }
     }
 
-    @Override
-    public void Shoot(int Time) {
-        for (int i = 1; i <= this.Speed*Time; i++) {
-            if (this.Rounds > 0) {
-                System.out.println("Bah!");
-                this.Rounds --;
-            } else System.out.println("Click! Unlucky bro");
+    /**
+     * Несколько очередей.
+     *
+     * @param times количество очередей
+     */
+    public void shoot(int Time) {
+        for (int i = 0; i < times; i++) {
+            this.shoot();
         }
     }
 }

@@ -1,65 +1,101 @@
 package ru.Semenov.Weapon;
 
+/**
+ * Пистолет с ограниченным магазином.
+ */
+
 public class Pistol extends Weapon {
-    //protected int Rounds;
-    protected int MaxRounds;
+    private static final int DEFAULT_ROUNDS = 5;
 
+    protected int maxRounds;
 
-    public Pistol(int rnds, int max) {
-        //this.Rounds = rnds;
-        super(rnds);
-        this.MaxRounds = max;
+    /**
+     * Создаёт пистолет с заданными начальным
+     * и максимальным запасом.
+     * @param rounds    начальное количество патронов
+     * @param maxRounds максимальная ёмкость
+     */
+    public Pistol(int rounds, int max) {
+        super(rounds);
+        this.maxRounds = max;
     }
 
-    public Pistol(int max) {
-        //this.Rounds = 5;
-        super(5);
-        this.MaxRounds = max;
+    /**
+     * Создаёт пистолет с 5 патронами и
+     * заданной максимальной ёмкостью.
+     * @param maxRounds максимальная ёмкость
+     */
+    public Pistol(int maxRounds) {
+        super(DEFAULT_ROUNDS);
+        this.maxRounds = maxRounds;
     }
 
-
-    public int GetMax() {
-        return this.MaxRounds;
+    /**
+     * Возвращает максимальную ёмкость.
+     *
+     * @return максимальное количество патронов
+     */
+    public int getMax() {
+        return this.maxRounds;
     }
 
-    @Override
-    public int Reload(int count) {
+    /**
+     * Перезаряжает пистолет, учитывая максимальную ёмкость.
+     *
+     * @param count количество патронов для перезарядки
+     * @return реально добавленное количество
+     * @throws IllegalArgumentException если count < 0
+     */
+    public int reload(int count) {
         if (count < 0) {
-            throw new IllegalArgumentException("Count of rounds to reload can`t be negative.");
+            throw new IllegalArgumentException(
+                    "Count of rounds to " +
+                    "reload can`t be negative.");
         }
 
-        if (this.Rounds + count > this.MaxRounds) {
-            int overcap = Math.abs(this.MaxRounds - this.Rounds - count);
-            this.Rounds = this.MaxRounds;
-            return overcap;
-        }
-
-        this.Rounds += count;
-        return count;
+        final int freeSpace = this.maxRounds - this.rounds;
+        final int toAdd = Math.min(count, freeSpace);
+        this.rounds += toAdd;
+        return toAdd;
     }
 
-    public String Discharge() {
-        int Ds = this.Rounds;
-        this.Rounds = 0;
-        return "Discharged " + Ds + " rounds from pistol";
+    /**
+     * Разряжает пистолет, возвращая
+     * количество извлечённых патронов.
+     * @return количество разряженных патронов
+     */
+    public String discharge() {
+        final int removed = this.rounds;
+        this.rounds = 0;
+        return removed;
     }
 
-
-    public boolean IsCharged() {
-        return this.Rounds > 0 ? true : false;
+    /**
+     * Проверяет, заряжен ли пистолет.
+     *
+     * @return true, если есть патроны
+     */
+    public boolean isCharged() {
+        return this.rounds > 0
     }
 
-    @Override
-    public void Shoot() {
-        if (this.Rounds > 0) {
+    /**
+     * Производит одиночный выстрел.
+     */
+    public void shoot() {
+        if (this.rounds > 0) {
             System.out.println("Bah! ");
-            this.Rounds --;
-        } else System.out.println("Click! Unlucky bro");
+            this.rounds --;
+        } else System.out.println("Click!);
     }
 
-    public void Shoot(int triggers) {
+    /**
+     * Производит серию выстрелов.
+     * @param count количество выстрелов
+     */
+    public void shoot(int triggers) {
         for (int i = 1; i <= triggers; i++) {
-            this.Shoot();
+            this.shoot();
         }
     }
 
